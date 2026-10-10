@@ -61,7 +61,9 @@
                     "videoPreviews": "Video Önizlemelerini Etkinleştir",
                     "ttWelcomeMsg": "TT Karşılama Mesajını Göster",
                     "guestSignInReminder": "Misafir Giriş Hatırlatmasını Göster",
-                    "reloadHomeOnStartup": "Açılışta Ana Sayfayı Yeniden Yükle"
+                    "reloadHomeOnStartup": "Açılışta Ana Sayfayı Yeniden Yükle",
+                    "squeezeback": "Shrink Video When Comments/Description Open",
+                    "keyDedupe": "Ignore Duplicated Remote Key Presses"
                 }
             },
             "subtitles": {
@@ -106,7 +108,26 @@
                     },
                     "codecAny": "Herhangi",
                     "qualityAuto": "Otomatik",
-                    "hideRelatedVideosPlayer": "Benzer Videoları Gizle"
+                    "hideRelatedVideosPlayer": "Benzer Videoları Gizle",
+                    "pipPosition": {
+                        "title": "Mini Player Position",
+                        "subtitle": "Where the mini player is shown on the screen",
+                        "options": {
+                            "bottom-right": "Bottom Right",
+                            "bottom-left": "Bottom Left",
+                            "top-right": "Top Right",
+                            "top-left": "Top Left"
+                        }
+                    },
+                    "pipSize": {
+                        "title": "Mini Player Size",
+                        "subtitle": "How large the mini player is",
+                        "options": {
+                            "small": "Small",
+                            "medium": "Medium",
+                            "large": "Large"
+                        }
+                    }
                 }
             },
             "uiSettings": {

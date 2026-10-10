@@ -1,7 +1,7 @@
 /*global navigate*/
 import '../spatial-navigation-polyfill.js';
 import css from './ui.css';
-import { configRead, configWrite } from '../config.js';
+import { configRead, configWrite, configChangeEmitter } from '../config.js';
 import updateStyle from './theme.js';
 import { showToast } from './ytUI.js';
 import modernUI from './settings.js';
@@ -9,6 +9,11 @@ import resolveCommand, { patchResolveCommand } from '../resolveCommand.js';
 import { pipToFullscreen } from '../features/pictureInPicture.js';
 import getCommandExecutor from './customCommandExecution.js';
 import { t } from 'i18next';
+
+// Disable the polyfill's own arrow-key handling right away. Until now this only
+// happened once the <video> element existed, so for a short while both the
+// polyfill and YouTube reacted to the same arrow key press.
+try { window.__spatialNavigation__.keyMode = 'NONE'; } catch (e) { }
 
 // It just works, okay?
 const interval = setInterval(() => {
@@ -35,6 +40,15 @@ const keys = {
   48: 0
 };
 
+function applySqueezeback(enabled) {
+  try {
+    const featureSwitches = window.tectonicConfig.featureSwitches;
+    featureSwitches.isSqueezebackCapable = !!enabled;
+    // Only animate the resize when the rest of the UI animations are on.
+    featureSwitches.isSqueezebackAnimatable = !!enabled && !!configRead('enableFixedUI');
+  } catch (e) { }
+}
+
 function execute_once_dom_loaded() {
 
   // Add CSS to head.
@@ -60,6 +74,17 @@ function execute_once_dom_loaded() {
       window.tectonicConfig.featureSwitches.supportsLongPress = true;
     } catch (e) { }
   }
+
+  // Let YouTube shrink the player when the comments/description panel opens
+  // ("squeezeback"), like the native Samsung YouTube app does, instead of
+  // drawing the panel over the full-size video. YouTube reads these flags
+  // every time a panel opens, so toggling them live is enough.
+  applySqueezeback(configRead('enableSqueezeback'));
+  configChangeEmitter.addEventListener('configChange', (evt) => {
+    if (evt.detail.key === 'enableSqueezeback' || evt.detail.key === 'enableFixedUI') {
+      applySqueezeback(configRead('enableSqueezeback'));
+    }
+  });
 
   // We handle key events ourselves.
   window.__spatialNavigation__.keyMode = 'NONE';

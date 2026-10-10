@@ -272,6 +272,14 @@ export default function modernUI(update, parameters) {
                     value: 'enableFixedUI'
                 },
                 {
+                    name: t('settings.options.misc.options.squeezeback'),
+                    value: 'enableSqueezeback'
+                },
+                {
+                    name: t('settings.options.misc.options.keyDedupe'),
+                    value: 'enableKeyDedupe'
+                },
+                {
                     name: t('settings.options.misc.options.hqThumbnails'),
                     icon: 'VIDEO_QUALITY',
                     value: 'enableHqThumbnails'
@@ -374,6 +382,40 @@ export default function modernUI(update, parameters) {
                             value: 'enableSwapMPWithPIP'
                         }
                     ]
+                },
+                {
+                    name: t('settings.options.videoPlayer.options.pipPosition.title'),
+                    icon: 'CLEAR_COOKIES',
+                    value: null,
+                    menuId: 'tt-pip-position',
+                    menuHeader: {
+                        title: t('settings.options.videoPlayer.options.pipPosition.title'),
+                        subtitle: t('settings.options.videoPlayer.options.pipPosition.subtitle')
+                    },
+                    options: ['bottom-right', 'bottom-left', 'top-right', 'top-left'].map((position) => {
+                        return {
+                            name: t(`settings.options.videoPlayer.options.pipPosition.options.${position}`),
+                            key: 'pipPosition',
+                            value: position
+                        }
+                    })
+                },
+                {
+                    name: t('settings.options.videoPlayer.options.pipSize.title'),
+                    icon: 'CLEAR_COOKIES',
+                    value: null,
+                    menuId: 'tt-pip-size',
+                    menuHeader: {
+                        title: t('settings.options.videoPlayer.options.pipSize.title'),
+                        subtitle: t('settings.options.videoPlayer.options.pipSize.subtitle')
+                    },
+                    options: ['small', 'medium', 'large'].map((size) => {
+                        return {
+                            name: t(`settings.options.videoPlayer.options.pipSize.options.${size}`),
+                            key: 'pipSize',
+                            value: size
+                        }
+                    })
                 },
                 {
                     name: t('settings.options.videoPlayer.options.preferredVideoQuality.title'),

@@ -64,7 +64,9 @@
                     "videoPreviews": "Activer les aperçus vidéo",
                     "ttWelcomeMsg": "Afficher le message de bienvenue TT",
                     "guestSignInReminder": "Afficher le rappel de connexion invité",
-                    "reloadHomeOnStartup": "Recharger l'accueil au démarrage"
+                    "reloadHomeOnStartup": "Recharger l'accueil au démarrage",
+                    "squeezeback": "Shrink Video When Comments/Description Open",
+                    "keyDedupe": "Ignore Duplicated Remote Key Presses"
                 }
             },
             "subtitles": {
@@ -109,7 +111,26 @@
                     },
                     "codecAny": "Tous",
                     "qualityAuto": "Auto",
-                    "hideRelatedVideosPlayer": "Masquer les vidéos associées"
+                    "hideRelatedVideosPlayer": "Masquer les vidéos associées",
+                    "pipPosition": {
+                        "title": "Mini Player Position",
+                        "subtitle": "Where the mini player is shown on the screen",
+                        "options": {
+                            "bottom-right": "Bottom Right",
+                            "bottom-left": "Bottom Left",
+                            "top-right": "Top Right",
+                            "top-left": "Top Left"
+                        }
+                    },
+                    "pipSize": {
+                        "title": "Mini Player Size",
+                        "subtitle": "How large the mini player is",
+                        "options": {
+                            "small": "Small",
+                            "medium": "Medium",
+                            "large": "Large"
+                        }
+                    }
                 }
             },
             "time": {

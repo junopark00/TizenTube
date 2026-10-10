@@ -1,6 +1,26 @@
 // Picture in Picture Mode for TizenTube
 
 import resolveCommand from "../resolveCommand.js";
+import { configRead } from "../config.js";
+
+// Screen fraction used for the mini player (width = innerWidth / divisor).
+const PIP_SIZES = { small: 4.5, medium: 3.5, large: 2.5 };
+const PIP_EDGE_MARGIN = 0.034;
+
+function pipLayout() {
+    const divisor = PIP_SIZES[configRead('pipSize')] || PIP_SIZES.medium;
+    const position = configRead('pipPosition') || 'bottom-right';
+    const width = window.innerWidth / divisor;
+    const height = window.innerHeight / divisor;
+    const marginX = window.innerWidth * PIP_EDGE_MARGIN;
+    const marginY = window.innerHeight * PIP_EDGE_MARGIN;
+    return {
+        width,
+        height,
+        left: position.endsWith('left') ? marginX : window.innerWidth - width - marginX,
+        top: position.startsWith('top') ? marginY : window.innerHeight - height - marginY
+    };
+}
 
 window.isPipPlaying = false;
 let PlayerService = null;
@@ -51,12 +71,11 @@ function enablePip() {
 
                     function onPipEnter() {
                         videoElement.style.removeProperty('inset');
-                        const pipWidth = window.innerWidth / 3.5;
-                        const pipHeight = window.innerHeight / 3.5;
-                        videoElement.style.width = `${pipWidth}px`;
-                        videoElement.style.height = `${pipHeight}px`;
-                        videoElement.style.top = '68vh';
-                        videoElement.style.left = '68vw';
+                        const layout = pipLayout();
+                        videoElement.style.width = `${layout.width}px`;
+                        videoElement.style.height = `${layout.height}px`;
+                        videoElement.style.top = `${layout.top}px`;
+                        videoElement.style.left = `${layout.left}px`;
 
                         window.isPipPlaying = true;
                         videoElement.removeEventListener('play', onPipEnter);

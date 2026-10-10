@@ -61,7 +61,9 @@
                     "videoPreviews": "Попередній перегляд відео",
                     "ttWelcomeMsg": "Вітальне повідомлення",
                     "guestSignInReminder": "Показувати нагадування про гостьовий вхід",
-                    "reloadHomeOnStartup": "Оновлювати головну сторінку під час запуску"
+                    "reloadHomeOnStartup": "Оновлювати головну сторінку під час запуску",
+                    "squeezeback": "Shrink Video When Comments/Description Open",
+                    "keyDedupe": "Ignore Duplicated Remote Key Presses"
                 }
             },
             "subtitles": {
@@ -106,7 +108,26 @@
                     },
                     "codecAny": "Будь-який",
                     "qualityAuto": "Авто",
-                    "hideRelatedVideosPlayer": "Приховувати схожі відео"
+                    "hideRelatedVideosPlayer": "Приховувати схожі відео",
+                    "pipPosition": {
+                        "title": "Mini Player Position",
+                        "subtitle": "Where the mini player is shown on the screen",
+                        "options": {
+                            "bottom-right": "Bottom Right",
+                            "bottom-left": "Bottom Left",
+                            "top-right": "Top Right",
+                            "top-left": "Top Left"
+                        }
+                    },
+                    "pipSize": {
+                        "title": "Mini Player Size",
+                        "subtitle": "How large the mini player is",
+                        "options": {
+                            "small": "Small",
+                            "medium": "Medium",
+                            "large": "Large"
+                        }
+                    }
                 }
             },
             "time": {

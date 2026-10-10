@@ -63,7 +63,9 @@
                     "videoPreviews": "Activează previzualizările video",
                     "ttWelcomeMsg": "Afișează mesajul de bun venit TizenTube",
                     "guestSignInReminder": "Afișează reamintirea de conectare ca oaspete",
-                    "reloadHomeOnStartup": "Reîncarcă pagina principală la pornire"
+                    "reloadHomeOnStartup": "Reîncarcă pagina principală la pornire",
+                    "squeezeback": "Shrink Video When Comments/Description Open",
+                    "keyDedupe": "Ignore Duplicated Remote Key Presses"
                 }
             },
             "subtitles": {
@@ -108,7 +110,26 @@
                     },
                     "codecAny": "Any",
                     "qualityAuto": "Auto",
-                    "hideRelatedVideosPlayer": "Hide Related Videos"
+                    "hideRelatedVideosPlayer": "Hide Related Videos",
+                    "pipPosition": {
+                        "title": "Mini Player Position",
+                        "subtitle": "Where the mini player is shown on the screen",
+                        "options": {
+                            "bottom-right": "Bottom Right",
+                            "bottom-left": "Bottom Left",
+                            "top-right": "Top Right",
+                            "top-left": "Top Left"
+                        }
+                    },
+                    "pipSize": {
+                        "title": "Mini Player Size",
+                        "subtitle": "How large the mini player is",
+                        "options": {
+                            "small": "Small",
+                            "medium": "Medium",
+                            "large": "Large"
+                        }
+                    }
                 }
             },
             "uiSettings": {

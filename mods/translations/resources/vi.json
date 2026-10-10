@@ -62,7 +62,9 @@
                     "videoPreviews": "Bật tính năng xem trước video",
                     "ttWelcomeMsg": "Hiển thị thông báo chào mừng TizenTube",
                     "guestSignInReminder": "Hiển thị nhắc nhở đăng nhập cho chế độ khách",
-                    "reloadHomeOnStartup": "Tải lại trang chủ khi khởi động"
+                    "reloadHomeOnStartup": "Tải lại trang chủ khi khởi động",
+                    "squeezeback": "Shrink Video When Comments/Description Open",
+                    "keyDedupe": "Ignore Duplicated Remote Key Presses"
                 }
             },
             "subtitles": {
@@ -107,7 +109,26 @@
                     },
                     "codecAny": "Bất kỳ",
                     "qualityAuto": "Tự động",
-                    "hideRelatedVideosPlayer": "Ẩn những video có liên quan"
+                    "hideRelatedVideosPlayer": "Ẩn những video có liên quan",
+                    "pipPosition": {
+                        "title": "Mini Player Position",
+                        "subtitle": "Where the mini player is shown on the screen",
+                        "options": {
+                            "bottom-right": "Bottom Right",
+                            "bottom-left": "Bottom Left",
+                            "top-right": "Top Right",
+                            "top-left": "Top Left"
+                        }
+                    },
+                    "pipSize": {
+                        "title": "Mini Player Size",
+                        "subtitle": "How large the mini player is",
+                        "options": {
+                            "small": "Small",
+                            "medium": "Medium",
+                            "large": "Large"
+                        }
+                    }
                 }
             },
             "uiSettings": {

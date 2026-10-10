@@ -55,6 +55,8 @@
                         }
                     },
                     "fixUI": "Fix UI",
+                    "squeezeback": "Shrink Video When Comments/Description Open",
+                    "keyDedupe": "Ignore Duplicated Remote Key Presses",
                     "hqThumbnails": "Enable High Quality Thumbnails",
                     "longPress": "Enable Long Press Actions",
                     "shorts": "Enable Shorts",
@@ -85,6 +87,25 @@
                             "showSpeedCtrlBtn": "Show Speed Controls Button",
                             "addMPBtn": "Show Mini Player Button",
                             "swapMPWithPIP": "Swap Mini Player Button with PiP Button"
+                        }
+                    },
+                    "pipPosition": {
+                        "title": "Mini Player Position",
+                        "subtitle": "Where the mini player is shown on the screen",
+                        "options": {
+                            "bottom-right": "Bottom Right",
+                            "bottom-left": "Bottom Left",
+                            "top-right": "Top Right",
+                            "top-left": "Top Left"
+                        }
+                    },
+                    "pipSize": {
+                        "title": "Mini Player Size",
+                        "subtitle": "How large the mini player is",
+                        "options": {
+                            "small": "Small",
+                            "medium": "Medium",
+                            "large": "Large"
                         }
                     },
                     "preferredVideoQuality": {

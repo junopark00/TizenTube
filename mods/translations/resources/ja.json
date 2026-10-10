@@ -61,7 +61,9 @@
                     "videoPreviews": "動画のプレビューを有効にする",
                     "ttWelcomeMsg": "TT のようこそメッセージを表示する",
                     "guestSignInReminder": "ゲストログインのリマインダーを表示する",
-                    "reloadHomeOnStartup": "起動時にホームを再読み込みする"
+                    "reloadHomeOnStartup": "起動時にホームを再読み込みする",
+                    "squeezeback": "Shrink Video When Comments/Description Open",
+                    "keyDedupe": "Ignore Duplicated Remote Key Presses"
                 }
             },
             "subtitles": {
@@ -106,7 +108,26 @@
                     },
                     "codecAny": "選択する",
                     "qualityAuto": "自動",
-                    "hideRelatedVideosPlayer": "関連動画を非表示にする"
+                    "hideRelatedVideosPlayer": "関連動画を非表示にする",
+                    "pipPosition": {
+                        "title": "Mini Player Position",
+                        "subtitle": "Where the mini player is shown on the screen",
+                        "options": {
+                            "bottom-right": "Bottom Right",
+                            "bottom-left": "Bottom Left",
+                            "top-right": "Top Right",
+                            "top-left": "Top Left"
+                        }
+                    },
+                    "pipSize": {
+                        "title": "Mini Player Size",
+                        "subtitle": "How large the mini player is",
+                        "options": {
+                            "small": "Small",
+                            "medium": "Medium",
+                            "large": "Large"
+                        }
+                    }
                 }
             },
             "time": {
