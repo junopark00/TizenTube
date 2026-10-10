@@ -10,7 +10,23 @@ configChangeEmitter.addEventListener('configChange', (event) => {
 let interval;
 
 function disableWhosWatching(value) {
-    const LeanbackRecurringActions = JSON.parse(localStorage['yt.leanback.default::recurring_actions']);
+    // Always stop a previous "permanently enable" interval so they never stack
+    // and so disabling the menu is not undone a minute later.
+    if (interval) {
+        clearInterval(interval);
+        interval = null;
+    }
+
+    // YouTube has not written this key yet on a fresh install / cleared storage.
+    // Throwing here at module load would abort every module imported after this one.
+    let LeanbackRecurringActions;
+    try {
+        LeanbackRecurringActions = JSON.parse(localStorage['yt.leanback.default::recurring_actions']);
+    } catch (e) {
+        return;
+    }
+    if (!LeanbackRecurringActions?.data?.data) return;
+
     const shouldPermanentlyEnable = configRead('permanentlyEnableWhoIsWatchingMenu');
     const date = new Date();
     if (!value) {
@@ -18,7 +34,8 @@ function disableWhosWatching(value) {
         date.setDate(date.getDate() + 7);
         LeanbackRecurringActions.data.data["startup-screen-account-selector-with-guest"] && 
             (LeanbackRecurringActions.data.data["startup-screen-account-selector-with-guest"].lastFired = date.getTime());
-        LeanbackRecurringActions.data.data.whos_watching_fullscreen_zero_accounts.lastFired = date.getTime();
+        LeanbackRecurringActions.data.data.whos_watching_fullscreen_zero_accounts &&
+            (LeanbackRecurringActions.data.data.whos_watching_fullscreen_zero_accounts.lastFired = date.getTime());
         LeanbackRecurringActions.data.data["startup-screen-signed-out-welcome-back"] && 
             (LeanbackRecurringActions.data.data["startup-screen-signed-out-welcome-back"].lastFired = date.getTime());
         localStorage['yt.leanback.default::recurring_actions'] = JSON.stringify(LeanbackRecurringActions);
@@ -31,7 +48,8 @@ function disableWhosWatching(value) {
         function setActions() {
             LeanbackRecurringActions.data.data["startup-screen-account-selector-with-guest"] && 
                 (LeanbackRecurringActions.data.data["startup-screen-account-selector-with-guest"].lastFired = date.getTime());
-            LeanbackRecurringActions.data.data.whos_watching_fullscreen_zero_accounts.lastFired = date.getTime();
+            LeanbackRecurringActions.data.data.whos_watching_fullscreen_zero_accounts &&
+            (LeanbackRecurringActions.data.data.whos_watching_fullscreen_zero_accounts.lastFired = date.getTime());
             LeanbackRecurringActions.data.data["startup-screen-signed-out-welcome-back"] &&
                 (LeanbackRecurringActions.data.data["startup-screen-signed-out-welcome-back"].lastFired = date.getTime());
             localStorage['yt.leanback.default::recurring_actions'] = JSON.stringify(LeanbackRecurringActions);
@@ -41,7 +59,7 @@ function disableWhosWatching(value) {
             date.setDate(date.getDate() - 7);
             setActions();
             interval = setInterval(setActions, 60 * 1000);
-        } else if (interval) clearInterval(interval);
+        }
     }
 }
 

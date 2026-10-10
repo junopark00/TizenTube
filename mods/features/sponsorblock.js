@@ -59,6 +59,7 @@ class SponsorBlockHandler {
   active = true;
 
   attachVideoTimeout = null;
+  buildOverlayTimeout = null;
   nextSkipTimeout = null;
   sliderInterval = null;
 
@@ -93,6 +94,9 @@ class SponsorBlockHandler {
       )}`
     );
     const results = await resp.json();
+
+    // The user may have navigated away (destroy() called) while the request was pending.
+    if (!this.active) return;
 
     const result = results.find((v) => v.videoID === this.videoID);
     console.info(this.videoID, 'Got it:', result);
@@ -153,6 +157,7 @@ class SponsorBlockHandler {
   attachVideo() {
     clearTimeout(this.attachVideoTimeout);
     this.attachVideoTimeout = null;
+    if (!this.active) return;
 
     this.video = document.querySelector('video');
     if (!this.video) {
@@ -170,6 +175,9 @@ class SponsorBlockHandler {
   }
 
   buildOverlay() {
+    clearTimeout(this.buildOverlayTimeout);
+    this.buildOverlayTimeout = null;
+    if (!this.active) return;
     if (this.segmentsoverlay) {
       console.info('Overlay already built');
       return;
@@ -182,7 +190,10 @@ class SponsorBlockHandler {
 
     const videoDuration = this.video.duration;
     const slider = document.querySelector('div[idomkey="slider"]');
-    if (!slider) return setTimeout(() => this.buildOverlay(), 100);
+    if (!slider) {
+      this.buildOverlayTimeout = setTimeout(() => this.buildOverlay(), 100);
+      return;
+    }
 
     this.segmentsoverlay = document.createElement('div');
 
@@ -358,6 +369,11 @@ class SponsorBlockHandler {
     if (this.attachVideoTimeout) {
       clearTimeout(this.attachVideoTimeout);
       this.attachVideoTimeout = null;
+    }
+
+    if (this.buildOverlayTimeout) {
+      clearTimeout(this.buildOverlayTimeout);
+      this.buildOverlayTimeout = null;
     }
 
     if (this.sliderInterval) {

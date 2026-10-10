@@ -191,9 +191,9 @@ JSON.parse = function () {
         r.contents.singleColumnWatchNextResults.pivot.sectionListRenderer.contents.unshift(ShelfRenderer(
           'Queued Videos',
           queuedVideosClone,
-          queuedVideosClone.findIndex(v => v.contentId === window.queuedVideos.lastVideoId) !== -1 ?
-            queuedVideosClone.findIndex(v => v.contentId === window.queuedVideos.lastVideoId)
-            : 0
+          Math.max(0, queuedVideosClone.findIndex(v =>
+            (v.tileRenderer?.contentId || v.lockupViewModel?.contentId) === window.queuedVideos.lastVideoId
+          ))
         ));
       }
     }
@@ -346,7 +346,9 @@ for (const key in window._yttv) {
 
 
 function processShelves(shelves, shouldAddPreviews = true) {
-  for (const shelve of shelves) {
+  // Iterate backwards so removing a shelf does not skip the next one.
+  for (let shelfIndex = shelves.length - 1; shelfIndex >= 0; shelfIndex--) {
+    const shelve = shelves[shelfIndex];
     if (shelve.shelfRenderer) {
       if (!shelve.shelfRenderer.tvhtml5Style) shelve.shelfRenderer.tvhtml5Style = { effects: {} };
       if (configRead('disableEnlargingThumbnails')) shelve.shelfRenderer.tvhtml5Style.effects.enlarge = false;
@@ -361,7 +363,7 @@ function processShelves(shelves, shouldAddPreviews = true) {
       shelve.shelfRenderer.content.horizontalListRenderer.items = hideVideo(shelve.shelfRenderer.content.horizontalListRenderer.items);
       if (!configRead('enableShorts')) {
         if (shelve.shelfRenderer.tvhtml5ShelfRendererType === 'TVHTML5_SHELF_RENDERER_TYPE_SHORTS') {
-          shelves.splice(shelves.indexOf(shelve), 1);
+          shelves.splice(shelfIndex, 1);
           continue;
         }
         shelve.shelfRenderer.content.horizontalListRenderer.items = shelve.shelfRenderer.content.horizontalListRenderer.items.filter(item => item.tileRenderer?.tvhtml5ShelfRendererType !== 'TVHTML5_TILE_RENDERER_TYPE_SHORTS');
@@ -398,16 +400,15 @@ function addPreviews(items) {
 }
 
 function deArrowify(items) {
+  // Remove ad slots first; splicing while iterating with for...of skips the next item.
+  for (let i = items.length - 1; i >= 0; i--) {
+    if (items[i].adSlotRenderer) items.splice(i, 1);
+  }
   for (const item of items) {
-    if (item.adSlotRenderer) {
-      const index = items.indexOf(item);
-      items.splice(index, 1);
-      continue;
-    }
-    if (!item.tileRenderer && item.lockupViewModel) continue;
-    if (!item?.lockupViewModel?.contentType !== 'LOCKUP_CONTENT_TYPE_VIDEO') continue;
+    if (!item.tileRenderer && item.lockupViewModel?.contentType !== 'LOCKUP_CONTENT_TYPE_VIDEO') continue;
     if (configRead('enableDeArrow')) {
-      const videoID = item.tileRenderer.contentId || item.lockupViewModel.contentId;
+      const videoID = item.tileRenderer?.contentId || item.lockupViewModel?.contentId;
+      if (!videoID) continue;
       fetch(`https://sponsor.ajay.app/api/branding?videoID=${videoID}`).then(res => res.json()).then(data => {
         if (data.titles.length > 0) {
           const mostVoted = data.titles.reduce((max, title) => max.votes > title.votes ? max : title);
@@ -575,7 +576,7 @@ function feedbackMenuItems(panel) {
 
 function hideVideo(items) {
   return items.filter(item => {
-    if (!item.tileRenderer) return true;
+    if (!item.tileRenderer && !item.lockupViewModel) return true;
     const progressBar = item?.tileRenderer ? item.tileRenderer.header?.tileHeaderRenderer?.thumbnailOverlays?.find(overlay => overlay.thumbnailOverlayResumePlaybackRenderer)?.thumbnailOverlayResumePlaybackRenderer
     : item.lockupViewModel?.contentImage?.thumbnailViewModel?.overlays?.find(overlay => overlay.thumbnailBottomOverlayViewModel?.progressBar)?.thumbnailBottomOverlayViewModel?.progressBar. thumbnailOverlayProgressBarViewModel;
     if (!progressBar) return true;
