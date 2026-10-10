@@ -50399,8 +50399,11 @@ var apps = {
     launch: function launch(launchData) {
       var tbPackageId = tizen.application.getAppInfo().packageId;
       tizen.application.launchAppControl(new tizen.ApplicationControl("http://tizen.org/appcontrol/operation/view", null, null, null, [new tizen.ApplicationControlData("module", [JSON.stringify({
-        moduleName: '@foxreis/tizentube',
-        moduleType: 'npm',
+        // Fork: must match the module string added in TizenBrew
+        // (gh/junopark00/TizenTube@tizenbrew-dist), otherwise DIAL casts
+        // from a phone try to launch the official npm module.
+        moduleName: 'junopark00/TizenTube@tizenbrew-dist',
+        moduleType: 'gh',
         args: launchData
       })])]), "".concat(tbPackageId, ".").concat(commonjsGlobal.isTizenTube ? 'TizenTubeStandalone' : 'TizenBrewStandalone'));
     }
